@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Bundle Name="EngineDatabaseSetup" Version="1.0.0.0" Manufacturer="Home" UpgradeCode="94663c64-cac5-4b0a-a977-244530afc7df">
+		<BootstrapperApplicationRef Id="WixStandardBootstrapperApplication.RtfLicense" />
+
+		<Chain>
+
+			<MsiPackage SourceFile="$(var.EngineDatabaseSetup.TargetPath)" DisplayInternalUI="yes" />
+		</Chain>
+	</Bundle>
+</Wix>

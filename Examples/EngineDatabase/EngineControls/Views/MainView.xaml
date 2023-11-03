@@ -1,0 +1,100 @@
+﻿<UserControl x:Class="EngineUIComponents.Views.MainView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:EngineUIComponents.Views"
+             xmlns:detailViewModels="clr-namespace:EngineUIComponents.ViewModels.DetailViewModels"
+             mc:Ignorable="d"
+             xmlns:vm="clr-namespace:EngineUIComponents.ViewModels"
+             d:DataContext="{d:DesignInstance d:Type=vm:MainViewModel}"
+             d:DesignHeight="450" d:DesignWidth="800">
+    <UserControl.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="..\Styles\MainStyles.xaml"/>
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </UserControl.Resources>
+    <UserControl.Style>
+        <Style TargetType="UserControl" BasedOn="{StaticResource BaseControlStyle}"/>
+    </UserControl.Style>
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="Auto"/>
+            <ColumnDefinition Width="*"/>
+        </Grid.ColumnDefinitions>
+        <StackPanel Orientation="Vertical" Width="200" VerticalAlignment="Center">
+            <StackPanel.Resources>
+                <Style TargetType="Button" BasedOn="{StaticResource ButtonAnimatedStyle}">
+                    <Setter Property="Margin" Value="5, 2"/>
+                    <Setter Property="MinWidth" Value="80"/>
+                    <Setter Property="Height" Value="30" />
+                </Style>
+            </StackPanel.Resources>
+            <Button Command="{Binding EnginesCommand}">Engines</Button>
+            <Button Command="{Binding OrdersCommand}">Orders</Button>
+            <Button Command="{Binding EngineTypesCommand}">Engine types</Button>
+            <Button Command="{Binding UsersCommand}">Users</Button>
+        </StackPanel>
+        <TabControl ItemsSource="{Binding ElementViewModels}" SelectedItem="{Binding SelectedElement, Mode=TwoWay}" Grid.Column="1">
+            <TabControl.Resources>
+                <DataTemplate DataType="{x:Type vm:EnginesViewModel}">
+                    <local:EnginesView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:OrdersViewModel}">
+                    <local:OrdersView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:EngineTypesViewModel}">
+                    <local:EngineTypesView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type vm:UsersViewModel}">
+                    <local:UsersView/>
+                </DataTemplate>
+                <DataTemplate DataType="{x:Type detailViewModels:EngineDetailsViewModel}">
+                    <local:EngineDetailsView Style="{StaticResource BaseViewStyle}" />
+                </DataTemplate>
+
+
+                <Style TargetType="{x:Type TabItem}">
+                    <Setter Property="BorderThickness" Value="0"/>
+                    <Setter Property="Padding" Value="0" />
+                </Style>
+            </TabControl.Resources>
+            <TabControl.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal" Background="{StaticResource DefaultBackgroundBrush}">
+                        <TextBlock 
+                             Grid.Column="0"
+                             Text="{Binding Title}"
+                             VerticalAlignment="Center"
+                             Margin="4,0"
+                             Foreground="{StaticResource PanelForegroundColor}"
+                             />
+
+                        <Button
+                             Grid.Column="1"
+                             Width="23"
+                             Command="{Binding DataContext.CloseTabCommand, RelativeSource={RelativeSource AncestorType=UserControl}}"
+                             CommandParameter="{Binding}"
+                             FontSize="18" 
+                             VerticalContentAlignment="Center"
+                             Content="x">
+                            <Button.Style>
+                                <Style TargetType="Button" BasedOn="{StaticResource ButtonStyle}">
+                                    <Setter Property="Foreground" Value="#BB0000"/>
+                                </Style>
+                            </Button.Style>
+                        </Button>
+                    </StackPanel>
+                </DataTemplate>
+            </TabControl.ItemTemplate>
+            <TabControl.Style>
+                <Style TargetType="TabControl" BasedOn="{StaticResource BaseControlStyle}">
+                    <Setter Property="BorderBrush" Value="#35485F"/>
+                    <Setter Property="Margin" Value="5"/>
+                </Style>
+            </TabControl.Style>
+        </TabControl>
+    </Grid>
+</UserControl>

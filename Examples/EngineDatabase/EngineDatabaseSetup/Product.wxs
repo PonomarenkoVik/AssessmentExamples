@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Wix xmlns="http://schemas.microsoft.com/wix/2006/wi">
+	<Product Id="*" Name="EngineApp" Language="1033" Version="1.0.0.0" Manufacturer="Engine" UpgradeCode="e937a691-ea3e-4950-bd7c-1cf8a6d55de0">
+		<Package InstallerVersion="200" Compressed="yes" InstallScope="perMachine" />
+		<MajorUpgrade DowngradeErrorMessage="A newer version of [ProductName] is already installed." />
+		<MediaTemplate EmbedCab="yes" />
+		<UIRef Id="WixUI_Mondo"/>
+
+
+		<Feature Id="ProductFeature" Title="Engine database setup" Level="1">
+			<ComponentGroupRef Id="ProductFilesComponentGroup" />
+		</Feature>
+
+	</Product>
+
+	<Fragment>
+		<Directory Id="TARGETDIR" Name="SourceDir">
+			<Directory Id="ProgramFilesFolder">
+				<Directory Id="TOPINSTALLFOLDER" Name="EngineDatabase">
+					<Directory Id="INSTALLLOCATION" Name="EngineApp" >
+						<Directory Id="ProductFilesComponentGroup" />
+					</Directory>
+				</Directory>
+			</Directory>
+			<Directory Id="DesktopFolder" />
+		</Directory>
+	</Fragment>
+	
+	<Fragment>
+		<Icon Id="EngineApp.exe" SourceFile="..\EngineStartup\EngineApp.ico" />
+	</Fragment>
+
+</Wix>
